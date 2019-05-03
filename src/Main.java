@@ -1,5 +1,7 @@
 import javafx.util.Pair;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -7,8 +9,9 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
+    public static void main(String[] args) throws FileNotFoundException {
+        File file = new File("DATA.TXT");
+        Scanner in = new Scanner(file);
         int L = in.nextInt();
         int S = in.nextInt();
         in.nextLine();
