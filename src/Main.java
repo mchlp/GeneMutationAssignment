@@ -5,8 +5,6 @@
  *  Course: ICS4U
  */
 
-import javafx.util.Pair;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

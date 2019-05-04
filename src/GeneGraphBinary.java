@@ -5,7 +5,6 @@
  *  Course: ICS4U
  */
 
-import javafx.util.Pair;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ public class GeneGraphBinary {
     public BoolIntPair getFastestMutation(String startGene, String endGene) {
         // if the starting gene is a valid gene
         boolean firstGeneValid;
-        ArrayList<String> posStartingList = new ArrayList<>();
+        GeneList posStartingList = new GeneList();
         if (posGenes.contains(startGene)) {
             // if starting gene is a valid gene, set that as the starting point
             posStartingList.add(startGene);
