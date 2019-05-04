@@ -1,9 +1,20 @@
-import javafx.util.Pair;
+/*
+ *  Author: Michael Pu
+ *  Teacher: Mr. Radulovich
+ *  Date: 2019/5/3
+ *  Course: ICS4U
+ */
 
+import javafx.util.Pair;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Stores a graph with possible genes as the vertices and possible mutations as edges. Can calculate the fastest
+ * mutation from one gene to another. This implementation uses a sorted ArrayList to store the list of genes an
+ * adjacency list to allow for log n search time when sorted.
+ */
 public class GeneGraphBinary {
 
     private static final String[] POSSIBLE_CHARS = {"A", "G", "C", "T"};
@@ -22,7 +33,7 @@ public class GeneGraphBinary {
         generateGraph();
     }
 
-    public Pair<Boolean, Integer> getFastestMutation(String startGene, String endGene) {
+    public BoolIntPair getFastestMutation(String startGene, String endGene) {
         // if the starting gene is a valid gene
         boolean firstGeneValid;
         ArrayList<String> posStartingList = new ArrayList<>();
@@ -59,7 +70,7 @@ public class GeneGraphBinary {
                 }
             }
         }
-        return new Pair<>(reachableWithin, reachable ? minDis : -1);
+        return new BoolIntPair(reachableWithin, reachable ? minDis : -1);
     }
 
     private String swapAdjGene(String gene, int leftIndex) {

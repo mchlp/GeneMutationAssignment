@@ -1,3 +1,10 @@
+/*
+ *  Author: Michael Pu
+ *  Teacher: Mr. Radulovich
+ *  Date: 2019/5/3
+ *  Course: ICS4U
+ */
+
 import javafx.util.Pair;
 
 import java.io.File;
@@ -5,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
- * Wraps around the GeneGraphHash class to handle input and output.
+ * Wraps around the GeneGraphBinary class to handle input and output.
  */
 public class Main {
 
@@ -16,7 +23,7 @@ public class Main {
         int S = in.nextInt();
         in.nextLine();
 
-        // create HashSet to store alllowed genes
+        // create GeneList to store alllowed genes
         GeneList allowedGenes = new GeneList();
 
         for (int i = 0; i < S; i++) {
@@ -25,12 +32,11 @@ public class Main {
         }
 
         int M = in.nextInt();
+        int G = in.nextInt();
+        in.nextLine();
 
         // create graph
         GeneGraphBinary geneGraphBinary = new GeneGraphBinary(allowedGenes, L, M);
-
-        int G = in.nextInt();
-        in.nextLine();
 
         // loop through all queries
         for (int i = 0; i < G; i++) {
@@ -39,9 +45,9 @@ public class Main {
             String gene2 = line[1];
 
             // get minimum distance for query
-            Pair<Boolean, Integer> result = geneGraphBinary.getFastestMutation(gene1, gene2);
-            System.out.println(result.getKey() ? "YES" : "NO");
-            System.out.println(result.getValue());
+            BoolIntPair result = geneGraphBinary.getFastestMutation(gene1, gene2);
+            System.out.println(result.first ? "YES" : "NO");
+            System.out.println(result.second);
         }
     }
 }
