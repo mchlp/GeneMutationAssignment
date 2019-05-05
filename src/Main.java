@@ -43,7 +43,7 @@ public class Main {
 
         // create graph
         GeneGraphBinary geneGraphBinary = new GeneGraphBinary(allowedGenes, L, M);
-//        GeneGraphHash geneGraphBinary = new GeneGraphHash(allowedGenes, L, M);
+//        testing.GeneGraphHash geneGraphBinary = new testing.GeneGraphHash(allowedGenes, L, M);
 
         // loop through all queries
         for (int i = 0; i < G; i++) {
