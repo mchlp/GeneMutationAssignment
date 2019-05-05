@@ -7,10 +7,7 @@
 
 import data_structures.BoolIntPair;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Stores a graph with possible genes as the vertices and possible mutations as edges. Can calculate the fastest
@@ -25,7 +22,6 @@ public class GeneGraphId {
     private int maxMutations;
 
     private String[] posGenes;
-    private HashSet<String> posGenesHash;
     private ArrayList<Integer>[] adjList;
 
     public GeneGraphId(String[] genes, int L, int M) {

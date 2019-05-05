@@ -46,10 +46,10 @@ int bfs(string beg, string end){
 
 int main() {
     freopen("DATA_20.TXT", "r", stdin);
-    cin >> l >> s;
+    scanf("%d%d", &l, &s);
     for (int i = 0; i < s; i++) {
         string x;
-        cin >> x;
+        scanf(" %s", &x[0]);
         valid.push_back(x);
     }
     sort(valid.begin(), valid.end());
@@ -76,12 +76,12 @@ int main() {
             }
         }
     }
-
-    cin >> m >> g;
+    
+    scanf("%d%d", &m, &g);
 
     for(int t = 0; t < g; t++){
         string beg, end;
-        cin >> beg >> end;
+        scanf(" %s %s", &beg[0], &end[0]);
 
         int mut = bfs(beg, end);
 
