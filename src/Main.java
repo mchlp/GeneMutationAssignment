@@ -8,8 +8,7 @@
 import data_structures.BoolIntPair;
 import data_structures.GeneList;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 //TODO: Only valid characters are ATGC?
@@ -19,30 +18,23 @@ import java.util.Scanner;
  */
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 
         long startTime = System.nanoTime();
 
-        File file = new File("DATA_20.TXT");
-        Scanner in = new Scanner(file);
-        int L = in.nextInt();
-        int S = in.nextInt();
-        in.nextLine();
-
-        // create data_structures.GeneList to store alllowed genes
-        GeneList allowedGenes = new GeneList();
+        BufferedReader in = new BufferedReader(new FileReader("DATA_OUT.TXT"));
+        int L = Integer.parseInt(in.readLine());
+        int S = Integer.parseInt(in.readLine());
 
         String[] allowedGenesArr = new String[S];
 
         for (int i = 0; i < S; i++) {
-            String gene = in.nextLine();
-            allowedGenes.add(gene);
+            String gene = in.readLine();
             allowedGenesArr[i] = gene;
         }
 
-        int M = in.nextInt();
-        int G = in.nextInt();
-        in.nextLine();
+        int M = Integer.parseInt(in.readLine());
+        int G = Integer.parseInt(in.readLine());
 
         // create graph
 //        GeneGraphBinary geneGraphBinary = new old.GeneGraphBinary(allowedGenes, L, M);
@@ -53,7 +45,7 @@ public class Main {
 
         // loop through all queries
         for (int i = 0; i < G; i++) {
-            String[] line = in.nextLine().split(" ");
+            String[] line = in.readLine().split(" ");
             String gene1 = line[0];
             String gene2 = line[1];
 

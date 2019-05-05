@@ -7,9 +7,7 @@
 
 import data_structures.BoolIntPair;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Stores a graph with possible genes as the vertices and possible mutations as edges. Can calculate the fastest
@@ -23,14 +21,17 @@ public class GeneGraphId {
     private int geneLength;
     private int maxMutations;
 
-    private String[] posGenes;
+    private char[][] posGenes;
     private ArrayList<Integer>[] adjList;
 
     public GeneGraphId(String[] genes, int L, int M) {
         this.geneLength = L;
         this.maxMutations = M;
-        this.posGenes = genes;
-        Arrays.sort(this.posGenes);
+        this.posGenes = new char[genes.length][];
+        Arrays.sort(genes);
+        for (int i = 0; i < genes.length; i++) {
+            posGenes[i] = genes[i].toCharArray();
+        }
         generateGraph();
     }
 
@@ -38,7 +39,11 @@ public class GeneGraphId {
      * Returns the lowest number of mutation from startGene to endGene (-1 if unreachable) and if it can be
      * accomplished within the max number of mutations.
      */
-    public BoolIntPair getFastestMutation(String startGene, String endGene) {
+    public BoolIntPair getFastestMutation(String startGeneStr, String endGeneStr) {
+
+        char[] startGene = startGeneStr.toCharArray();
+        char[] endGene = endGeneStr.toCharArray();
+
         // if the starting gene is a valid gene
         boolean firstGeneValid;
 
@@ -72,7 +77,7 @@ public class GeneGraphId {
         boolean reachableWithin = false;
         // loop through starting genes
         for (int posStarting : posStartingList) {
-            int dis = getShortestPath(startGeneId, endGeneId);
+            int dis = getShortestPath(posStarting, endGeneId);
             // if endGene is reachable
             if (dis != -1) {
                 // add 1 to minimum distance if starting gene is not valid gene
@@ -99,23 +104,34 @@ public class GeneGraphId {
      * @param leftIndex the index of the left letter to be swapped.
      * @return a gene with the indicated letters swapped.
      */
-    private String swapAdjGene(char[] gene, int leftIndex) {
+    private char[] swapAdjGene(char[] gene, int leftIndex) {
         assert leftIndex < geneLength - 1 : "leftIndex must be less than L-1";
-        char[] newGene = gene.clone();
+        char[] newGene = Arrays.copyOf(gene, gene.length);
         char temp = gene[leftIndex];
         newGene[leftIndex] = newGene[leftIndex + 1];
         newGene[leftIndex + 1] = temp;
-        return new String(newGene);
+        return newGene;
     }
 
-    private int getGeneId(String gene) {
+    private int compareCharArr(char[] arr1, char[] arr2) {
+        for (int i = 0; i < Math.min(arr1.length, arr2.length); i++) {
+            int diff = Character.compare(arr1[i], arr2[i]);
+            if (diff == 0) {
+                continue;
+            }
+            return diff;
+        }
+        return Integer.compare(arr1.length, arr2.length);
+    }
+
+    private int getGeneId(char[] gene) {
         // binary search for gene
         int start = 0;
         int end = this.posGenes.length - 1;
 
         while (start <= end) {
             int middle = (start + end) / 2;
-            int diff = gene.compareTo(this.posGenes[middle]);
+            int diff = compareCharArr(gene, this.posGenes[middle]);
             if (diff > 0) {
                 start = middle + 1;
             } else if (diff < 0) {
@@ -130,43 +146,42 @@ public class GeneGraphId {
     /**
      * Generates all valid mutations of a gene.
      */
-    private ArrayList<Integer> generatePossibleMutations(String gene) {
-        assert gene.length() == geneLength : "Gene length must be L";
+    private ArrayList<Integer> generatePossibleMutations(char[] gene) {
+        assert gene.length == geneLength : "Gene length must be L";
 
         ArrayList<Integer> posMutations = new ArrayList<>();
 
         // for each character, substitute it with each of the four of the possible letters and add it to the list of
         // possible mutations if it is a valid gene
-        char[] curGene = gene.toCharArray();
         for (int i = 0; i < geneLength; i++) {
             for (String posChar : POSSIBLE_CHARS) {
-                if (posChar.charAt(0) != gene.charAt(i)) {
-                    char[] newGene = curGene.clone();
+                if (posChar.charAt(0) != gene[i]) {
+                    char[] newGene = Arrays.copyOf(gene, gene.length);
                     newGene[i] = posChar.charAt(0);
-                    String testGene = new String(newGene);
-                    int testGeneId = getGeneId(testGene);
-                    if (!testGene.equals(gene) && testGeneId != -1) {
+                    int testGeneId = getGeneId(newGene);
+                    if (!Arrays.equals(gene, newGene) && testGeneId != -1) {
                         posMutations.add(testGeneId);
                     }
                 }
             }
         }
-
         // for each character in the gene from index 0 to index length-2, swap that character with the character on
         // the right of it and add it to the list of possible mutations if it is a valid gene
         for (int i = 0; i < geneLength - 1; i++) {
-            if (gene.charAt(i) != gene.charAt(i + 1)) {
-                String testGene = swapAdjGene(gene.toCharArray(), i);
-                int testGeneId = getGeneId(testGene);
-                if (!testGene.equals(gene) && testGeneId != -1) {
+            if (gene[i] != gene[i + 1]) {
+                char[] newGene = swapAdjGene(gene, i);
+                int testGeneId = getGeneId(newGene);
+                if (!Arrays.equals(gene, newGene) && testGeneId != -1) {
                     posMutations.add(testGeneId);
                 }
             }
         }
+
         return posMutations;
     }
 
     private void generateGraph() {
+
         // initialize adjacency list
         adjList = new ArrayList[this.posGenes.length];
 
