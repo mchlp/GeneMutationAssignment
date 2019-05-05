@@ -6,10 +6,10 @@
  */
 
 import data_structures.BoolIntPair;
-import data_structures.GeneList;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 //TODO: Only valid characters are ATGC?
 
@@ -22,7 +22,7 @@ public class Main {
 
         long startTime = System.nanoTime();
 
-        BufferedReader in = new BufferedReader(new FileReader("DATA_OUT.TXT"));
+        BufferedReader in = new BufferedReader(new FileReader("DATA_1M.TXT"));
         int L = Integer.parseInt(in.readLine());
         int S = Integer.parseInt(in.readLine());
 
@@ -37,8 +37,6 @@ public class Main {
         int G = Integer.parseInt(in.readLine());
 
         // create graph
-//        GeneGraphBinary geneGraphBinary = new old.GeneGraphBinary(allowedGenes, L, M);
-//        GeneGraphHash geneGraphBinary = new old.GeneGraphHash(allowedGenes, L, M);
         GeneGraphId geneGraphBinary = new GeneGraphId(allowedGenesArr, L, M);
 
         System.out.println("Generate Graph Time: " + (System.nanoTime() - startTime) / 1E9);
