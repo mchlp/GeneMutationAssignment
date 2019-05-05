@@ -15,7 +15,7 @@ import java.util.Scanner;
 //TODO: Only valid characters are ATGC?
 
 /**
- * Wraps around the GeneGraphBinary class to handle input and output.
+ * Wraps around the old.GeneGraphBinary class to handle input and output.
  */
 public class Main {
 
@@ -23,7 +23,7 @@ public class Main {
 
         long startTime = System.nanoTime();
 
-        File file = new File("DATA_OUT.TXT");
+        File file = new File("DATA_20.TXT");
         Scanner in = new Scanner(file);
         int L = in.nextInt();
         int S = in.nextInt();
@@ -32,9 +32,12 @@ public class Main {
         // create data_structures.GeneList to store alllowed genes
         GeneList allowedGenes = new GeneList();
 
+        String[] allowedGenesArr = new String[S];
+
         for (int i = 0; i < S; i++) {
             String gene = in.nextLine();
             allowedGenes.add(gene);
+            allowedGenesArr[i] = gene;
         }
 
         int M = in.nextInt();
@@ -42,8 +45,11 @@ public class Main {
         in.nextLine();
 
         // create graph
-        GeneGraphBinary geneGraphBinary = new GeneGraphBinary(allowedGenes, L, M);
-//        testing.GeneGraphHash geneGraphBinary = new testing.GeneGraphHash(allowedGenes, L, M);
+//        GeneGraphBinary geneGraphBinary = new old.GeneGraphBinary(allowedGenes, L, M);
+//        GeneGraphHash geneGraphBinary = new old.GeneGraphHash(allowedGenes, L, M);
+        GeneGraphId geneGraphBinary = new GeneGraphId(allowedGenesArr, L, M);
+
+        System.out.println("Generate Graph Time: " + (System.nanoTime() - startTime) / 1E9);
 
         // loop through all queries
         for (int i = 0; i < G; i++) {

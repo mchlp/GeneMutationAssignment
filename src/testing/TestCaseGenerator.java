@@ -21,7 +21,7 @@ public class TestCaseGenerator {
     public static final String STARTING_GENE = "TGATCAACTAGCAGTTCCGA";
     public static final String INVALID_GENE = "AAAAAAAAAAAAAAAAAAAA";
     public static final int GENE_LENGTH = 20;
-    public static final int NUM_VALID_GENES = 1_000_000;
+    public static final int NUM_VALID_GENES = 2_000_000;
     public static final int MAX_MUTATIONS = 14;
     public static final int NUM_QUERIES = 20;
 
