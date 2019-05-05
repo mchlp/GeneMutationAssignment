@@ -5,9 +5,14 @@
  *  Course: ICS4U
  */
 
+import data_structures.BoolIntPair;
+import data_structures.GeneList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+//TODO: Only valid characters are ATGC?
 
 /**
  * Wraps around the GeneGraphBinary class to handle input and output.
@@ -15,13 +20,16 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        File file = new File("DATA.TXT");
+
+        long startTime = System.nanoTime();
+
+        File file = new File("DATA_OUT.TXT");
         Scanner in = new Scanner(file);
         int L = in.nextInt();
         int S = in.nextInt();
         in.nextLine();
 
-        // create GeneList to store alllowed genes
+        // create data_structures.GeneList to store alllowed genes
         GeneList allowedGenes = new GeneList();
 
         for (int i = 0; i < S; i++) {
@@ -35,6 +43,7 @@ public class Main {
 
         // create graph
         GeneGraphBinary geneGraphBinary = new GeneGraphBinary(allowedGenes, L, M);
+//        GeneGraphHash geneGraphBinary = new GeneGraphHash(allowedGenes, L, M);
 
         // loop through all queries
         for (int i = 0; i < G; i++) {
@@ -42,10 +51,12 @@ public class Main {
             String gene1 = line[0];
             String gene2 = line[1];
 
-            // get minimum distance for query
+            // get if reachable and minimum distance for query
             BoolIntPair result = geneGraphBinary.getFastestMutation(gene1, gene2);
             System.out.println(result.first ? "YES" : "NO");
             System.out.println(result.second);
         }
+
+        System.out.println("Total Time: " + (System.nanoTime() - startTime) / 1E9);
     }
 }

@@ -1,3 +1,12 @@
+/*
+ *  Author: Michael Pu
+ *  Teacher: Mr. Radulovich
+ *  Date: 2019/5/4
+ *  Course: ICS4U
+ */
+
+import data_structures.BoolIntPair;
+import data_structures.GeneList;
 import javafx.util.Pair;
 
 import java.util.ArrayDeque;
@@ -19,17 +28,18 @@ public class GeneGraphHash {
     private HashSet<String> posGenes;
     private HashMap<String, ArrayList<String>> adjList;
 
-    public GeneGraphHash(HashSet<String> genes, int L, int M) {
+    public GeneGraphHash(GeneList genes, int L, int M) {
         this.geneLength = L;
         this.maxMutations = M;
-        this.posGenes = genes;
+        this.posGenes = new HashSet<>();
+        this.posGenes.addAll(genes);
         generateGraph();
     }
 
-    public Pair<Boolean, Integer> getFastestMutation(String startGene, String endGene) {
+    public BoolIntPair getFastestMutation(String startGene, String endGene) {
 
         if (!posGenes.contains(endGene)) {
-            return new Pair<>(false, -1);
+            return new BoolIntPair(false, -1);
         }
 
         // if the starting gene is a valid gene
@@ -68,7 +78,7 @@ public class GeneGraphHash {
                 }
             }
         }
-        return new Pair<>(reachableWithin, reachable ? minDis : -1);
+        return new BoolIntPair(reachableWithin, reachable ? minDis : -1);
     }
 
     private String swapAdjGene(String gene, int leftIndex) {
