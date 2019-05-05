@@ -7,7 +7,9 @@
 
 import data_structures.BoolIntPair;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Stores a graph with possible genes as the vertices and possible mutations as edges. Can calculate the fastest
@@ -97,9 +99,13 @@ public class GeneGraphId {
      * @param leftIndex the index of the left letter to be swapped.
      * @return a gene with the indicated letters swapped.
      */
-    private String swapAdjGene(String gene, int leftIndex) {
+    private String swapAdjGene(char[] gene, int leftIndex) {
         assert leftIndex < geneLength - 1 : "leftIndex must be less than L-1";
-        return gene.substring(0, leftIndex) + gene.charAt(leftIndex + 1) + gene.charAt(leftIndex) + gene.substring(leftIndex + 2);
+        char[] newGene = gene.clone();
+        char temp = gene[leftIndex];
+        newGene[leftIndex] = newGene[leftIndex + 1];
+        newGene[leftIndex + 1] = temp;
+        return new String(newGene);
     }
 
     private int getGeneId(String gene) {
@@ -131,12 +137,17 @@ public class GeneGraphId {
 
         // for each character, substitute it with each of the four of the possible letters and add it to the list of
         // possible mutations if it is a valid gene
+        char[] curGene = gene.toCharArray();
         for (int i = 0; i < geneLength; i++) {
             for (String posChar : POSSIBLE_CHARS) {
-                String testGene = gene.substring(0, i) + posChar + gene.substring(i + 1);
-                int testGeneId = getGeneId(testGene);
-                if (!testGene.equals(gene) && testGeneId != -1) {
-                    posMutations.add(testGeneId);
+                if (posChar.charAt(0) != gene.charAt(i)) {
+                    char[] newGene = curGene.clone();
+                    newGene[i] = posChar.charAt(0);
+                    String testGene = new String(newGene);
+                    int testGeneId = getGeneId(testGene);
+                    if (!testGene.equals(gene) && testGeneId != -1) {
+                        posMutations.add(testGeneId);
+                    }
                 }
             }
         }
@@ -144,10 +155,12 @@ public class GeneGraphId {
         // for each character in the gene from index 0 to index length-2, swap that character with the character on
         // the right of it and add it to the list of possible mutations if it is a valid gene
         for (int i = 0; i < geneLength - 1; i++) {
-            String testGene = swapAdjGene(gene, i);
-            int testGeneId = getGeneId(testGene);
-            if (!testGene.equals(gene) && testGeneId != -1) {
-                posMutations.add(testGeneId);
+            if (gene.charAt(i) != gene.charAt(i + 1)) {
+                String testGene = swapAdjGene(gene.toCharArray(), i);
+                int testGeneId = getGeneId(testGene);
+                if (!testGene.equals(gene) && testGeneId != -1) {
+                    posMutations.add(testGeneId);
+                }
             }
         }
         return posMutations;

@@ -18,11 +18,11 @@ import java.util.Random;
 public class TestCaseGenerator {
 
     public static final String[] POSSIBLE_CHARS = {"A", "T", "C", "G"};
-    public static final String STARTING_GENE = "TGATCAACTAGCAGTTCCGA";
-    public static final String INVALID_GENE = "AAAAAAAAAAAAAAAAAAAA";
-    public static final int GENE_LENGTH = 20;
-    public static final int NUM_VALID_GENES = 2_000_000;
-    public static final int MAX_MUTATIONS = 14;
+    public static final String STARTING_GENE = "TGATCACCGA";
+    public static final String INVALID_GENE = "AAAAAAAAAA";
+    public static final int GENE_LENGTH = 10;
+    public static final int NUM_VALID_GENES = 5_000;
+    public static final int MAX_MUTATIONS = 5;
     public static final int NUM_QUERIES = 20;
 
     private static String swapAdjGene(String gene, int leftIndex) {
