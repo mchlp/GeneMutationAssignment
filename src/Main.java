@@ -14,13 +14,16 @@ import java.io.IOException;
  */
 public class Main {
 
+    private static final String FILE_NAME = "DATA_OUT.TXT";
+
     public static void main(String[] args) throws IOException {
 
         // read data from file
-        BufferedReader in = new BufferedReader(new FileReader("DATA_OUT.TXT"));
+        BufferedReader in = new BufferedReader(new FileReader(FILE_NAME));
         int L = Integer.parseInt(in.readLine().trim());
         int S = Integer.parseInt(in.readLine().trim());
 
+        // array to store valid genes
         String[] allowedGenesArr = new String[S];
 
         for (int i = 0; i < S; i++) {

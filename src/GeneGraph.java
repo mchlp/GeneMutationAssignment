@@ -14,7 +14,6 @@ import java.util.Arrays;
  * mutation from one gene to another. This implementation assigns an integer ID to each gene and that ID is used to
  * refer to the gene internally.
  */
-@SuppressWarnings("Duplicates")
 public class GeneGraph {
 
     private static final String[] POSSIBLE_CHARS = {"A", "G", "C", "T"};
@@ -30,6 +29,7 @@ public class GeneGraph {
         this.maxMutations = M;
         this.posGenes = new char[genes.length][];
         Arrays.sort(genes);
+        // convert Strings to char[]
         for (int i = 0; i < genes.length; i++) {
             posGenes[i] = genes[i].toCharArray();
         }
@@ -198,6 +198,9 @@ public class GeneGraph {
         return posMutations;
     }
 
+    /**
+     * Generates the graph from the list of possible genes by creating an adjacency list.
+     */
     private void generateGraph() {
         // initialize adjacency list
         adjList = new ArrayList[this.posGenes.length];
