@@ -5,7 +5,7 @@
  *  Course: ICS4U
  */
 
-package data_structures;
+package old.data_structures;
 
 import java.util.ArrayList;
 import java.util.Comparator;

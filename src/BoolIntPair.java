@@ -5,8 +5,6 @@
  *  Course: ICS4U
  */
 
-package data_structures;
-
 /**
  * Represents a pair of bool and int.
  */

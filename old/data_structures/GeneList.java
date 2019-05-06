@@ -5,10 +5,10 @@
  *  Course: ICS4U
  */
 
-package data_structures;
+package old.data_structures;
 
 /**
- * Implements data_structures.BinaryList to store Strings (genes). It should be sorted before searching to allow for
+ * Implements old.data_structures.BinaryList to store Strings (genes). It should be sorted before searching to allow for
  * log n search
  * time using binary search.
  */

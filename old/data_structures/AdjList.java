@@ -5,7 +5,7 @@
  *  Course: ICS4U
  */
 
-package data_structures;
+package old.data_structures;
 
 /**
  * Represents a graph as an adjacency list with the key as the String value of the gene and the value as a list of

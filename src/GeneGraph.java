@@ -5,9 +5,9 @@
  *  Course: ICS4U
  */
 
-import data_structures.BoolIntPair;
-
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Stores a graph with possible genes as the vertices and possible mutations as edges. Can calculate the fastest
@@ -15,16 +15,17 @@ import java.util.*;
  * refer to the gene internally.
  */
 @SuppressWarnings("Duplicates")
-public class GeneGraphId {
+public class GeneGraph {
 
     private static final String[] POSSIBLE_CHARS = {"A", "G", "C", "T"};
     private int geneLength;
     private int maxMutations;
 
+    // using char[] is faster than String
     private char[][] posGenes;
     private ArrayList<Integer>[] adjList;
 
-    public GeneGraphId(String[] genes, int L, int M) {
+    public GeneGraph(String[] genes, int L, int M) {
         this.geneLength = L;
         this.maxMutations = M;
         this.posGenes = new char[genes.length][];
@@ -36,11 +37,12 @@ public class GeneGraphId {
     }
 
     /**
-     * Returns the lowest number of mutation from startGene to endGene (-1 if unreachable) and if it can be
-     * accomplished within the max number of mutations.
+     * Returns the lowest number of mutation from startGene to endGene (-1 if unreachable) and if it can be accomplished
+     * within the max number of mutations.
      */
     public BoolIntPair getFastestMutation(String startGeneStr, String endGeneStr) {
 
+        // convert strings to char[]
         char[] startGene = startGeneStr.toCharArray();
         char[] endGene = endGeneStr.toCharArray();
 
@@ -82,6 +84,7 @@ public class GeneGraphId {
             if (dis != -1) {
                 // add 1 to minimum distance if starting gene is not valid gene
                 dis += (firstGeneValid ? 0 : 1);
+
                 if (!reachable) {
                     reachable = true;
                 }
@@ -106,13 +109,22 @@ public class GeneGraphId {
      */
     private char[] swapAdjGene(char[] gene, int leftIndex) {
         assert leftIndex < geneLength - 1 : "leftIndex must be less than L-1";
+        // create copy of char[] to modify
         char[] newGene = Arrays.copyOf(gene, gene.length);
+        // swap letters
         char temp = gene[leftIndex];
         newGene[leftIndex] = newGene[leftIndex + 1];
         newGene[leftIndex + 1] = temp;
         return newGene;
     }
 
+    /**
+     * Compares two char arrays lexicographically. Follows the specifications of {@link
+     * java.util.Comparator#compare(Object, Object)}.
+     *
+     * @param arr1 first char array.
+     * @param arr2 second char array.
+     */
     private int compareCharArr(char[] arr1, char[] arr2) {
         for (int i = 0; i < Math.min(arr1.length, arr2.length); i++) {
             int diff = Character.compare(arr1[i], arr2[i]);
@@ -124,8 +136,11 @@ public class GeneGraphId {
         return Integer.compare(arr1.length, arr2.length);
     }
 
+    /**
+     * Retrieves the id corresponding to the gene, or -1 if not found.
+     */
     private int getGeneId(char[] gene) {
-        // binary search for gene
+        // binary search for gene in the posGenes array. when the gene is found, its index is its id and is returned.
         int start = 0;
         int end = this.posGenes.length - 1;
 
@@ -156,8 +171,10 @@ public class GeneGraphId {
         for (int i = 0; i < geneLength; i++) {
             for (String posChar : POSSIBLE_CHARS) {
                 if (posChar.charAt(0) != gene[i]) {
+                    // create new char[] to modify
                     char[] newGene = Arrays.copyOf(gene, gene.length);
                     newGene[i] = posChar.charAt(0);
+                    // check if new gene is a valid gene
                     int testGeneId = getGeneId(newGene);
                     if (!Arrays.equals(gene, newGene) && testGeneId != -1) {
                         posMutations.add(testGeneId);
@@ -170,6 +187,7 @@ public class GeneGraphId {
         for (int i = 0; i < geneLength - 1; i++) {
             if (gene[i] != gene[i + 1]) {
                 char[] newGene = swapAdjGene(gene, i);
+                // check if new gene is a valid gene
                 int testGeneId = getGeneId(newGene);
                 if (!Arrays.equals(gene, newGene) && testGeneId != -1) {
                     posMutations.add(testGeneId);
@@ -181,7 +199,6 @@ public class GeneGraphId {
     }
 
     private void generateGraph() {
-
         // initialize adjacency list
         adjList = new ArrayList[this.posGenes.length];
 
@@ -198,14 +215,13 @@ public class GeneGraphId {
         // initialize queue for breath first search
         ArrayDeque<Integer> queue = new ArrayDeque<>();
 
-        // initialize distance array
+        // initialize distance array with -1 (not visited)
         int[] disArray = new int[this.posGenes.length];
         Arrays.fill(disArray, -1);
 
         // add starting gene to queue and distance array
         queue.addFirst(startGeneId);
         disArray[startGeneId] = 0;
-
 
         // while not all nodes have been explored
         while (!queue.isEmpty()) {
@@ -221,6 +237,7 @@ public class GeneGraphId {
                 // loop through connections in adjacency list of next node and explore all unexplored nodes
                 for (int connection : adjList[curGeneId]) {
                     int nodeDis = disArray[connection];
+                    // if node is unvisited or current distance is less than distance in disArray, visit the node
                     if (nodeDis == -1 || nodeDis > curDis + 1) {
                         // update distance in distance array
                         disArray[connection] = curDis + 1;

@@ -5,7 +5,7 @@
  *  Course: ICS4U
  */
 
-package data_structures;
+package old.data_structures;
 
 /**
  * Represents one element in the adjacency list. It contains a String as the key as a list of connected genes as the
