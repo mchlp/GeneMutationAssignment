@@ -5,7 +5,7 @@
  *  Course: ICS4U
  */
 
-package old.data_structures;
+package data_structures;
 
 /**
  * Represents a distance array in BFS. It should be sorted before searching to allow for log n search time using

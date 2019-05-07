@@ -1,14 +1,12 @@
 /*
  *  Author: Michael Pu
  *  Teacher: Mr. Radulovich
- *  Date: 2019/5/4
+ *  Date: 2019/5/6
  *  Course: ICS4U
  */
 
-package old;
-
-import BoolIntPair;
-import old.data_structures.GeneList;
+import data_structures.GeneList;
+import data_types.BoolIntPair;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

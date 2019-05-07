@@ -5,7 +5,9 @@
  *  Course: ICS4U
  */
 
-import java.util.ArrayDeque;
+import data_types.BoolIntPair;
+import data_types.Queue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -216,21 +218,20 @@ public class GeneGraph {
      */
     private int getShortestPath(int startGeneId, int endGeneId) {
         // initialize queue for breath first search
-        ArrayDeque<Integer> queue = new ArrayDeque<>();
+        Queue queue = new Queue();
 
         // initialize distance array with -1 (not visited)
         int[] disArray = new int[this.posGenes.length];
         Arrays.fill(disArray, -1);
 
         // add starting gene to queue and distance array
-        queue.addFirst(startGeneId);
+        queue.enqueue(startGeneId);
         disArray[startGeneId] = 0;
 
         // while not all nodes have been explored
         while (!queue.isEmpty()) {
             // retrieve next node to explore from queue
-            int curGeneId = queue.getLast();
-            queue.removeLast();
+            int curGeneId = queue.dequeue();
 
             // if next node is endGene
             if (curGeneId == endGeneId) {
@@ -245,7 +246,7 @@ public class GeneGraph {
                         // update distance in distance array
                         disArray[connection] = curDis + 1;
                         // add node to queue to be explored
-                        queue.addFirst(connection);
+                        queue.enqueue(connection);
                     }
                 }
             }

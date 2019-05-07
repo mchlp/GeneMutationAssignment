@@ -5,6 +5,9 @@
  *  Course: ICS4U
  */
 
+import data_structures.GeneList;
+import data_types.BoolIntPair;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,10 +17,9 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static final String FILE_NAME = "DATA_OUT.TXT";
+    private static final String FILE_NAME = "DATA_1M.TXT";
 
     public static void main(String[] args) throws IOException {
-
         // read data from file
         BufferedReader in = new BufferedReader(new FileReader(FILE_NAME));
         int L = Integer.parseInt(in.readLine().trim());
@@ -34,7 +36,7 @@ public class Main {
         int G = Integer.parseInt(in.readLine().trim());
 
         // create graph
-        GeneGraph geneGraphBinary = new GeneGraph(allowedGenesArr, L, M);
+        GeneGraph geneGraph = new GeneGraph(allowedGenesArr, L, M);
 
         // loop through all queries
         for (int i = 0; i < G; i++) {
@@ -43,7 +45,7 @@ public class Main {
             String gene2 = line[1].trim();
 
             // get if reachable and minimum distance for query
-            BoolIntPair result = geneGraphBinary.getFastestMutation(gene1, gene2);
+            BoolIntPair result = geneGraph.getFastestMutation(gene1, gene2);
             System.out.println(result.first ? "YES" : "NO");
             System.out.println(result.second);
         }
