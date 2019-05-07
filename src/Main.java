@@ -48,5 +48,7 @@ public class Main {
             System.out.println(result.first ? "YES" : "NO");
             System.out.println(result.second);
         }
+
+        in.close();
     }
 }
