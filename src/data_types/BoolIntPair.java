@@ -5,7 +5,9 @@
  *  Course: ICS4U
  */
 
-package data_types;/**
+package data_types;
+
+/**
  * Represents a pair of bool and int.
  */
 public class BoolIntPair {

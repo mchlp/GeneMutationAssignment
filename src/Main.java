@@ -5,7 +5,6 @@
  *  Course: ICS4U
  */
 
-import data_structures.GeneList;
 import data_types.BoolIntPair;
 
 import java.io.BufferedReader;
