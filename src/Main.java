@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static final String FILE_NAME = "DATA_10.TXT";
+    private static final String FILE_NAME = "DATA_1M.TXT";
 
     public static void main(String[] args) throws IOException {
         // read data from file
