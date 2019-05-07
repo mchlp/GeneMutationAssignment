@@ -1,7 +1,7 @@
 /*
  *  Author: Michael Pu
  *  Teacher: Mr. Radulovich
- *  Date: 2019/5/3
+ *  Date: 2019/5/6
  *  Course: ICS4U
  */
 
@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static final String FILE_NAME = "DATA_1M.TXT";
+    private static final String FILE_NAME = "DATA_10.TXT";
 
     public static void main(String[] args) throws IOException {
         // read data from file

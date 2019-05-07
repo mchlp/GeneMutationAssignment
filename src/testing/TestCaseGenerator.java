@@ -1,7 +1,7 @@
 /*
  *  Author: Michael Pu
  *  Teacher: Mr. Radulovich
- *  Date: 2019/5/4
+ *  Date: 2019/5/6
  *  Course: ICS4U
  */
 
@@ -21,7 +21,7 @@ public class TestCaseGenerator {
     public static final String STARTING_GENE = "TGATCACCGA";
     public static final String INVALID_GENE = "AAAAAAAAAA";
     public static final int GENE_LENGTH = 10;
-    public static final int NUM_VALID_GENES = 5_000;
+    public static final int NUM_VALID_GENES = 8_000;
     public static final int MAX_MUTATIONS = 5;
     public static final int NUM_QUERIES = 20;
 
